@@ -1,0 +1,15 @@
+{
+  "name": "torus",
+  "version": "1.0.0",
+  "description": "toruScan",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.4.0"
+  }
+}
