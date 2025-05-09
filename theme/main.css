@@ -1,0 +1,1591 @@
+/*
+@media screen and ( max-width: 1366px ) {
+}
+*/
+
+/* Reset styles  */
+@font-face {
+    font-family: DefaultFont;
+    src: url(fonts/JetBrainsMono-Regular.woff2);
+}
+
+@font-face {
+    font-family: CaptionFont;
+    src: url(fonts/JetBrainsMono-Bold.woff2);
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: normal;
+    vertical-align: middle;
+
+    font-family: DefaultFont;
+    --font-size-default: 1.2vh;
+    --font-size-widgets: 1.6vh;
+    --font-size-caption: 1.9vh;
+    font-size: var( --font-size-default );
+    text-shadow: 1px 1px 1px rgba( 0,0,0,0.1 );
+}
+
+html, body {
+    background-image: none;
+    width: 100vw;
+    height:100vh;
+    overflow: hidden;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: none;
+    background-image: none;
+    overflow: hidden;
+    width: 100%;
+    height:auto;
+}
+
+a, a:link, a:visited, a:hover  {
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+div, span {
+    background: none;
+}
+
+div p,
+span p {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    white-space: pre-line;
+    margin: 0px;
+    padding:0px;
+}
+
+hr {
+    pointer-events: none;
+    display:block;
+    border-bottom: none;
+    width: 100%;
+    margin: auto;
+}
+
+hr.basic {
+    border-top: 1px solid;
+}
+
+hr.simple {
+    border-top: 1px dashed;
+}
+
+img {
+    pointer-events: none;
+}
+
+/* отключить выделение текста везде, кроме полей ввода */
+*:not( [ type = "text" ] ):not( textarea ) {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* отключить нативные спинеры для числовых полей */
+input[ type = "number" ]::-webkit-outer-spin-button,
+input[ type = "number" ]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* применяить стиль для отключенных элементов */
+select:disabled[disabled],
+textarea:disabled[disabled],
+input:disabled[disabled],
+input:disabled[disabled] + label {
+    -webkit-filter: invert(0.25);
+    filter: invert(0.25);
+    pointer-events: none;
+    cursor: default;
+}
+
+input:disabled[disabled] + label .icon {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* применить тему ко всем меткам, кроме исключений */
+label:not( .nothemed ) {
+    background-image: linear-gradient(  var(--background-grad-color),
+                                        var(--background-main-color),
+                                        var(--background-main-color),
+                                        var(--background-grad-color) );
+}
+/* ================================ */
+.light:not( [ type="text" ] ):not( textarea ) {
+    --background-main-color:    white;
+    --background-grad-color:    rgb(229, 228, 226);         /* platinum */
+    --background-bubble-color:  #E0C9A6;                    /* old paper */
+    --background-checked-color: #ECF0FC;
+    --cost-values-color:        #4169E1;                    /* RoyalBlue */
+    --checked-main-color:       #4169E1;                    /* RoyalBlue */
+    --border-main-color:        black;
+    --text-main-color:          black;
+    --shadow-main-color:        rgb(54, 69, 79);            /* charcoal */
+    border-color:               var(--border-main-color);
+    color:                      var(--text-main-color);
+}
+
+.dark:not( [ type="text" ] ):not( textarea ) {
+    --background-main-color:    rgb(64, 64, 64);
+    --background-grad-color:    darkgray;
+    --background-bubble-color:  #E0C9A6;                    /* old paper */
+    --background-checked-color: #ECF0FC;
+    --cost-values-color:        #4169E1;                    /* RoyalBlue */
+    --checked-main-color:       #4169E1;                    /* RoyalBlue */
+    --border-main-color:        white;
+    --text-main-color:          white;
+    --shadow-main-color:        WhiteSmoke;
+    border-color:               var(--border-main-color);
+    color:                      var(--text-main-color);
+}
+
+.red:not( [ type="text" ] ):not( textarea ) {
+    --background-main-color:    darkred;
+    --background-grad-color:    red;
+    border-color:               var(--border-main-color);
+    color:                      white;
+}
+
+.green:not( [ type="text" ] ):not( textarea ) {
+    --background-main-color:    green;
+    --background-grad-color:    lightgreen;
+    border-color:               var(--border-main-color);
+    color:                      white;
+}
+
+.yellow:not( [ type="text" ] ):not( textarea ) {
+    --background-main-color:    #FFFF99;
+    --background-grad-color:    #999900;
+    border-color:               var(--border-main-color);
+    color:                      black;
+}
+/* ================================ */
+/* scrollbars */
+*::-webkit-scrollbar {
+    --main-scrollbar-size: 2em;
+    width: var( --main-scrollbar-size );
+    height:var( --main-scrollbar-size );
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--background-main-color);
+    border-color: var( --border-main-color );
+    border: 1px solid;
+    border-radius: 0.75em;
+}
+
+.dark::-webkit-scrollbar-thumb {
+    background-image: radial-gradient( black, grey );
+}
+
+.light::-webkit-scrollbar-thumb {
+    background-image: radial-gradient( grey, white );
+}
+/* ================================ */
+.left-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.right-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.evenly-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.between-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.around-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.center-row-flexbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-column-flexbar {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.center-column-flexbar {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stretch-column-flexbar {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.wrap-flexbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+}
+/* ================================ */
+.widget.nocaption {
+    border: none;
+    padding:none;
+}
+
+.icon {
+    -webkit-user-drag: none;
+    object-fit: contain;
+    margin: auto;
+}
+
+.dark .icon:not( .noinvert ) {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+}
+
+.vice {
+    pointer-events: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    color: inherit;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    padding:auto;
+    margin: auto;
+}
+
+.btnlab {
+    pointer-events: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    color: inherit;
+    padding:auto;
+    margin: auto;
+}
+
+.capt {
+    pointer-events: none;
+    font-family: CaptionFont;
+    font-size: var( --font-size-caption );
+    color: inherit;
+}
+
+.note {
+    pointer-events: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    color: inherit;
+}
+/* ================================ */
+.overlay {
+    display:block;
+    /*важно!!! не менять   */
+    /*pointer-events: none;*/
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height:100vh;
+    z-index: 1;
+    background-color: rgba(128, 128, 128, 1);
+}
+/* ================================ */
+.viewer {
+    --width-viewer: 100%;
+    --height-viewer: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    /*pointer-events: none;*/
+    position: relative;
+    border: 1px solid black;
+    width: var( --width-viewer );
+    max-width: var( --width-viewer );
+    min-width: var( --width-viewer );
+    height: var( --height-viewer );
+    max-height: var( --height-viewer );
+    min-height: var( --height-viewer );
+    margin: 0px;
+    padding: 0px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.viewer .thumbnail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    pointer-events: none;
+    position: relative;
+    image-rendering: high-quality;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.thumbnail .tilesheap {
+    display: grid;
+    gap: 0px;
+    pointer-events: none;
+    position: relative;
+    image-rendering: high-quality;
+    border: 1px solid yellow;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tilesheap canvas {
+    pointer-events: none;
+    position: relative;
+    image-rendering: high-quality;
+    /*object-fit: none;*/
+}
+/* ================================ */
+.empty {
+    display: flex;
+    pointer-events: none;
+    position: relative;
+    border: 0px dashed;
+    border-color: grey;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.infoblock {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    font-family: DefaultFont;
+    font-size: var( --font-size-default );
+    pointer-events: none;
+    position: relative;
+    border: 0px dashed;
+    margin: 0em;
+    padding:0em 0.5em;
+}
+
+.infoblock.bigfont {
+    font-size: var( --font-size-widgets );
+}
+
+.infoblock.nocaption {
+    display: none;
+}
+
+.infoblock.shifted {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.infoblock .sign {
+    pointer-events: none;
+    white-space: nowrap;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.infoblock .cost {
+    pointer-events: none;
+    color: var(--cost-values-color);
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: rtl;
+}
+
+.cost {
+    pointer-events: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-default );
+    color: var(--cost-values-color);
+    white-space: pre-line;
+    text-align: justify;
+}
+/* ================================ */
+.sheetlayout {
+    display: flex;
+    pointer-events: none;
+    position: relative;
+    background-image: none;
+    background-color: transparent;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.sheetlayout img {
+    display: none;
+    position: relative;
+    object-fit: contain;
+    background-image: none;
+    background-color: ivory;
+    border: 1px solid;
+    border-radius: 0.25em;
+    width: 95%;
+    height:85%;
+    margin: auto;
+    padding:0.25em;
+}
+/* ================================ */
+.button,
+.closedlg,
+.applybtn,
+.smartbtn {
+    display: block;
+    position: relative;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+input[ type = "button" ] {
+    display: none;
+}
+
+input[ type = "button" ] + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 0.25em;
+    width: calc( 100% - 0.125em );
+    height: calc( 100% - 0.125em );
+    margin: auto;
+    padding:0.25em;
+    box-shadow: 1px 1px 1px 1px var( --shadow-main-color );
+}
+
+input[ type = "button" ]:not( input:disabled[ disabled ] ):not( input[ value = "on" ] ):hover + label {
+    box-shadow: 1px 1px 1px 2px var( --shadow-main-color );
+}
+
+input[ type = "button" ][ value = "on" ] + label {
+    box-shadow: 1px 1px 3px 2px var(--checked-main-color),
+                -1px 1px 3px 2px var(--checked-main-color),
+                1px -1px 3px 2px var(--checked-main-color),
+                -1px -1px 3px 2px var(--checked-main-color);
+}
+/* ================================ */
+.toptabs {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.toptabs input {
+    display: none;
+}
+
+.toptabs input + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    border-top: 0px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-radius: 2em 0 0 0;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 6px;
+}
+
+.toptabs input:checked + label {
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    border-bottom: 0px;
+    border-radius: 2em 0 0 0;
+    border-color: var(--checked-main-color);
+}
+
+.toptabs input:not(:checked) + label {
+    filter: invert(0.25);
+}
+/* ================================ */
+.lefttabs {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: 0;
+    padding:0;
+}
+
+.lefttabs input {
+    display: none;
+}
+
+.lefttabs input + label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-right: 0px;
+    border-bottom: 1px solid;
+    border-radius: 0 0 0 2em;
+    margin: auto;
+}
+
+.lefttabs input:checked + label {
+    pointer-events: none;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 0px;
+    border-bottom: 3px solid;
+    border-radius: 0 0 0 2em;
+    border-color: var(--checked-main-color);
+}
+
+.lefttabs input:not(:checked) + label {
+    filter: invert(0.25);
+}
+
+.lefttabs input + label div {
+    transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+/* ================================ */
+.simpleradio {
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.simpleradio.noborder {
+    border: none;
+}
+
+.simpleradio input {
+    display: none;
+}
+
+.simpleradio input + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    border-top: 2px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 2px solid;
+    border-radius: 0px;
+    margin: auto;
+    padding:10px 0px;
+}
+
+.simpleradio .lefttip {
+    display: inline-block;
+    pointer-events: none;
+    position: relative;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    border-right: 1px solid;
+    border-bottom: 2px solid;
+    border-radius: 1em 0 0 1em;
+    margin: auto;
+    padding:10px 0px;
+}
+
+.simpleradio .righttip {
+    display: inline-block;
+    pointer-events: none;
+    position: relative;
+    border-top: 2px solid;
+    border-left: 1px solid;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    border-radius: 0 1em 1em 0;
+    margin: auto;
+    padding:10px 0px;
+}
+
+.simpleradio input:checked + label.light {
+    /*color: var( --checked-main-color );*/
+    color: white;
+    border-top: 4px solid;
+    border-bottom: 4px solid;
+    border-color: var(--checked-main-color);
+    background-image: none;
+    background-color: black;
+}
+
+.simpleradio input:checked + label.dark {
+    /*color: var( --checked-main-color );*/
+    color: black;
+    border-color: var(--checked-main-color);
+    background-image: none;
+    background-color: white;
+}
+/* ================================ */
+.radioswitch {
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+    background-color: var(--background-main-color);
+}
+
+.radioswitch.noborder {
+    border: none;
+}
+
+.radioswitch input {
+    display: none;
+}
+
+.radioswitch input + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.25em;
+    padding:0.25em;
+}
+
+.radioswitch input:checked + label {
+    box-shadow: 1px 1px 1px 2px var(--checked-main-color),
+                -1px 1px 1px 2px var(--checked-main-color),
+                1px -1px 1px 2px var(--checked-main-color),
+                -1px -1px 1px 2px var(--checked-main-color);
+}
+/* ================================ */
+.toggle {
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.toggle.noborder {
+    border: none;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle input + label {
+    display: inline-block;
+    position: relative;
+    border: 1px solid;
+    border-radius: 2em;
+    width: 80%;
+    height: auto;
+    margin: auto;
+    padding:0px;
+}
+
+.toggle input + label .na {
+    pointer-events: none;
+    display: none;
+    position: relative;
+    border: 1px solid;
+    border-radius: 2em;
+    width: 100%;
+    height: 2em;
+    margin: 1px;
+    padding: 0.25em;
+}
+
+.toggle input + label .on,
+.toggle input + label .off {
+    pointer-events: none;
+    display: none;
+    position: relative;
+    cursor: pointer;
+    border: 0px solid;
+    border-radius: 2em;
+    width: calc( 100% - 4em );
+    height: 2em;
+    margin: 1px;
+    padding: 0.25em;
+}
+
+.toggle input + label .flag {
+    pointer-events: none;
+    display: none;
+    position: relative;
+    cursor: pointer;
+    background-image: radial-gradient(
+        var(--background-grad-color),
+        var(--background-main-color) );
+    border: 1px solid;
+    border-radius: 2em;
+    width: 2em;
+    height: 2em;
+    margin: 1px 1px;
+    padding: 0.25em;
+}
+
+.toggle input[ value="on" ] + label.light {
+    color: white;
+    border-color: black;
+    background-image: linear-gradient(darkgrey, black, darkgrey);
+}
+
+.toggle input[ value="on" ] + label.dark {
+    color: black;
+    border-color: white;
+    background-image: linear-gradient(lightgrey, white, lightgrey);
+}
+
+.toggle input[ value="off" ] + label .flag {
+    display: inline-block;
+}
+
+.toggle input[ value="off" ] + label .off {
+    display: inline-block;
+}
+
+.toggle input[ value="off" ] + label .on {
+    display: none;
+}
+
+.toggle input[ value="off" ] + label .na {
+    display: none;
+}
+
+.toggle input[ value="on" ] + label .flag {
+    display: inline-block;
+}
+
+.toggle input[ value="on" ] + label .off {
+    display: none;
+}
+
+.toggle input[ value="on" ] + label .on {
+    display: inline-block;
+}
+
+.toggle input[ value="on" ] + label .na {
+    display: none;
+}
+
+.toggle input:not( [ value="on" ] ):not( [ value="off" ] ) + label .flag {
+    display: none;
+}
+
+.toggle input:not( [ value="on" ] ):not( [ value="off" ] ) + label .off {
+    display: none;
+}
+
+.toggle input:not( [ value="on" ] ):not( [ value="off" ] ) + label .on {
+    display: none;
+}
+
+.toggle input:not( [ value="on" ] ):not( [ value="off" ] ) + label .na {
+    display: inline-block;
+}
+/* ================================ */
+/* ================================ */
+/* ================================ */
+.rangectrl {
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.rangectrl.noborder {
+    border: none;
+}
+
+.rangectrl input {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    width: 90%;
+    margin: auto;
+}
+
+.rangectrl input + label {
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 90%;
+    margin: auto;
+}
+
+.rangectrl input + label .defvalue {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 80%;
+    margin: auto;
+}
+
+.rangectrl input + label .minvalue {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 10%;
+    margin: auto;
+}
+
+.rangectrl input + label .maxvalue {
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 10%;
+    margin: auto;
+}
+/* ================================ */
+.txtfield,
+.numfield,
+.ipafield,
+.pathfield,
+.txtarea {
+    display: flex;
+    position: relative;
+    background: var(--background-main-color);
+    color: var(--text-main-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.txtfield.noborder,
+.numfield.noborder,
+.ipafield.noborder,
+.pathfield.noborder,
+.txtarea.noborder {
+    border: none;
+}
+
+.txtfield input[ type="text" ] {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    background: white;
+    color: var(--cost-values-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    width:  calc( var(--txtfield-width) - 2em );
+    min-width:  calc( var(--txtfield-width) - 2em );
+    max-width:  calc( var(--txtfield-width) - 2em );
+    height: 2em;
+    margin: auto;
+    padding:0.25em;
+}
+
+.ipafield input[ type="text" ] {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    background: white;
+    color: var(--cost-values-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    width:  calc( var(--ipafield-width) - 2em );
+    min-width:  calc( var(--ipafield-width) - 2em );
+    max-width:  calc( var(--ipafield-width) - 2em );
+    height: 2em;
+    margin: auto;
+    padding:0.25em;
+}
+
+.txtarea .input {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden; /* for textarea */
+    resize: none; /* for textarea */
+    background: white;
+    color: var(--cost-values-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: justify;
+    white-space: pre-wrap;
+
+    width:  calc( var(--txtarea-width) - 2em );
+    min-width:  calc( var(--txtarea-width) - 2em );
+    max-width:  calc( var(--txtarea-width) - 2em );
+    height: 3em;
+    margin: auto;
+    padding:0.25em;
+}
+
+.pathfield .input {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden; /* for textarea */
+    resize: none; /* for textarea */
+    background: white;
+    color: var(--cost-values-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: justify;
+    white-space: pre-wrap;
+
+    width:  calc( var(--pathfield-width) - 2em );
+    min-width:  calc( var(--pathfield-width) - 2em );
+    max-width:  calc( var(--pathfield-width) - 2em );
+    height: 3em;
+    margin: auto;
+    padding:0.25em;
+}
+
+.numfield input[ type="number" ] {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    background: white;
+    color: var(--cost-values-color);
+    border: 1px solid;
+    border-color: var(--border-main-color);
+    border-radius: 0.25em;
+
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+
+    width:  calc( var(--numfield-width) - 8em );
+    min-width:  calc( var(--numfield-width) - 8em );
+    max-width:  calc( var(--numfield-width) - 8em );
+    height: 2em;
+    margin: 0.25em 0em;
+    padding:0.25em;
+}
+
+.numfield input[ type="button" ] + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    background-image: none;
+    background-color: var( --background-main-color );
+    color: var( --text-main-color );
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+
+    border: 1px solid;
+    border-radius: 50%;
+
+    width:  2em;
+    height: 2em;
+    margin: 0.25em 0em;
+    padding:0.25em;
+}
+
+/* ================================ */
+.dropdown {
+    display: flex;
+    position: relative;
+    background: none;
+    background-image: none;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.dropdown.noborder {
+    border: none;
+}
+
+.dropdown select.picker {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    overflow: hidden;
+    outline: none;
+    /*hide default down arrow in webkit */
+    /*
+    -webkit-appearance: none;
+    appearance: none;
+    */
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    white-space: nowrap;
+
+    background: none;
+    background-image: none;
+    background-color: var( --background-main-color );
+    border-color: var( --border-main-color );
+    color: var( --text-main-color );
+
+    border: 1px solid;
+    border-radius: 0.25em;
+
+    width:  calc( var(--dropdown-width) - 2em );
+    min-width:  calc( var(--dropdown-width) - 2em );
+    max-width:  calc( var(--dropdown-width) - 2em );
+    height: 2em;
+    margin: auto;
+    padding:0.25em;
+}
+
+.dropdown select.picker option {
+    display: inline-block;
+    position: relative;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    background: none;
+    background-image: none;
+    background-color: white;
+    color: black;
+    margin: auto;
+    padding:0.25em;
+}
+
+.dropdown select.picker option:focus {
+    outline: none;
+}
+/* ================================ */
+.listbox,
+.checklist {
+    display: flex;
+    position: relative;
+    background: none;
+    background-image: none;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 0.125em;
+    padding:0.125em;
+}
+
+.listbox .list,
+.checklist .list {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    overflow: hidden;
+    outline: none;
+    /*hide default down arrow in webkit */
+    /*
+    -webkit-appearance: none;
+    appearance: none;
+    */
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    white-space: nowrap;
+
+    background: var( --background-main-color );
+    border-color: var( --border-main-color );
+    color: var( --text-main-color );
+
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: auto;
+    padding:0.25em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.listbox .list {
+    width:  calc( var(--listbox-width) - 2em );
+    min-width:  calc( var(--listbox-width) - 2em );
+    max-width:  calc( var(--listbox-width) - 2em );
+    height:  calc( var(--listbox-height) - 4em );
+    min-height:  calc( var(--listbox-height) - 4em );
+    max-height:  calc( var(--listbox-height) - 4em );
+}
+
+.checklist .list {
+    width:  calc( var(--checklist-width) - 2em );
+    min-width:  calc( var(--checklist-width) - 2em );
+    max-width:  calc( var(--checklist-width) - 2em );
+    height:  calc( var(--checklist-height) - 4em );
+    min-height:  calc( var(--checklist-height) - 4em );
+    max-height:  calc( var(--checklist-height) - 4em );
+}
+
+.listbox .row .label,
+.checklist .row .label {
+    display: block;
+    position: relative;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    background: none;
+    background-image: none;
+    background-color: white;
+    color: black;
+    margin: auto;
+    padding:0.25em;
+}
+/* ================================ */
+.smartlist {
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    border-radius: 0.25em;
+    margin: 1em;
+    padding:0em;
+}
+
+.smartlist .listbody {
+    width: 100%;
+    height:100%;
+    margin: 0em;
+    padding:0em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.smartlist .listhead,
+.smartlist .listrow {
+    border: 2px solid;
+    border-color: var( --background-main-color );
+    width: 100%;
+    margin: 1px 0px;
+    padding:0em;
+}
+
+.smartlist .listrow:has( [ name*="focusedcell" ]:checked ) {
+    border: 2px solid;
+    border-color: var( --checked-main-color );
+    background: var( --background-checked-color );
+    border-radius: 1em;
+}
+
+.smartlist .focusedcell,
+.smartlist .focusedcell > input {
+    display: none;
+    /*display: inline-block;*/
+    pointer-events: none;
+}
+
+.smartlist .defaultcell,
+.smartlist .currentcell {
+    min-width: 22%;
+    max-width: 22%;
+}
+
+.smartlist .itemname {
+    min-width: 56%;
+    max-width: 56%;
+}
+
+.smartlist .listhead .defaultcell,
+.smartlist .listhead .currentcell,
+.smartlist .listhead .itemname {
+    pointer-events: none;
+    text-align: center;
+    border-right: 1px dashed;
+    border-color: var( --border-main-color );
+    margin: 0em;
+    padding:0.125em;
+}
+
+.smartlist .listbody .defaultcell,
+.smartlist .listbody .currentcell,
+.smartlist .listbody .itemname {
+    pointer-events: none;
+    text-align: center;
+    border: 0px dashed;
+    margin: 0em;
+    padding:0.125em;
+}
+
+.smartlist .listbody .defaultcell > input,
+.smartlist .listbody .currentcell > input {
+    display: inline-block;
+    pointer-events: none;
+    border: 1px solid;
+    background: none;
+    height: 2em;
+    margin: 0em;
+    padding:0em;
+    /*transform: scale(0.8);*/
+}
+
+.smartlist .listbody .itemname > input {
+    display: inline-block;
+    pointer-events: none;
+
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+
+    background: none;
+    background-image: none;
+    outline: none;
+    border: 0px solid;
+    width: 100%;
+    height: 2em;
+    margin: 0em;
+    padding:0em;
+}
+/* ================================ */
+/* ================================ */
+/* ================================ */
+.checkgroup {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 0.25em;
+    position: relative;
+    border: 1px solid;
+    border-color: var( --border-main-color );
+    border-radius: 0.25em;
+    margin: 0.25em;
+    padding:0.25em;
+}
+
+.checkgroup .item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: normal;
+    column-gap: 1em;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+}
+
+.checkgroup .item input {
+    display: block;
+    order: 1;
+    width: 2em;
+    height: 2em;
+}
+
+.checkgroup .item label {
+    display: block;
+    order: 2;
+    background: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    width: 100%;
+    height: 2em;
+}
+/* ================================ */
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 0.25em;
+    position: relative;
+    border: 1px solid;
+    border-color: var( --border-main-color );
+    border-radius: 0.25em;
+    margin: 0.25em;
+    padding:0.25em;
+}
+
+.checkbox input {
+    display: block;
+    order: 1;
+    width: 2em;
+    height: 2em;
+}
+
+.checkbox label {
+    display: block;
+    order: 2;
+    background: none;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    text-align: left;
+    width: 100%;
+    height: 2em;
+}
+/* ================================ */
+/* ================================ */
+/* ================================ */
+.popup.content,
+.modal.content {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    display: none;
+    opacity: 0.95;
+    margin: auto;
+    padding:5px;
+    box-shadow: 5px 5px 5px 5px grey;
+    background-color: var(--background-main-color);
+}
+/* ================================ */
+.tool {
+    display: block;
+    border: 1px solid;
+    border-radius: 1em;
+}
+/* ================================ */
+.dialog,
+.runproc {
+    --runproc-width: 320px;
+    --runproc-height: 320px;
+    display: block;
+    border: 1px solid;
+    border-radius: 2em;
+    animation-name: dialogshow;
+    animation-duration: 2s
+}
+
+@keyframes dialogshow {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+.dialog .title,
+.runproc .title {
+    /*pointer-events: none;*/
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-image: linear-gradient(  to right,
+                                        var(--background-grad-color),
+                                        var(--background-main-color),
+                                        var(--background-grad-color) );
+    border-radius: 1em 1em 0 0;
+    color: inherit;
+    margin: auto;
+    padding: 0.25em;
+}
+
+.runproc .message {
+    pointer-events: none;
+    display: block;
+    font-family: DefaultFont;
+    font-size: var( --font-size-widgets );
+    width: calc( var(--runproc-width) - 10px );
+    height: auto;
+    margin: auto;
+    padding: 1em;
+}
+
+.runproc .animation {
+    pointer-events: none;
+    display: block;
+    width: calc( var(--runproc-width) - 10px );
+    height: auto;
+    margin: auto;
+    padding: 1em;
+}
+
+.runproc .animation img {
+    object-fit: scale-down;
+    width:  100%;
+    height: 100%;
+    margin: auto;
+    padding:auto;
+}
+/* ================================ */
+/* ================================ */
+/* ================================ */
+.bubble {
+    pointer-events: none;
+    display: none;
+    position: absolute;
+    z-index: 4;
+    opacity: 0.9;
+    animation-name: bubbleshow;
+    animation-duration: 2s;
+}
+
+@keyframes bubbleshow {
+    from { opacity: 0 }
+    to { opacity: 0.9 }
+}
+
+.bubble .body {
+    pointer-events: none;
+    font-family: inherit;
+    font-size: var( --font-size-widgets );
+    text-align: center;
+    border-radius: 2em;
+    min-height: 3em;
+    max-height: 6em;
+    background-color: var( --background-bubble-color );
+    box-shadow: 0.5em 0.5em 0.5em 0.5em grey;
+    margin: auto;
+    padding:1em;
+}
+
+/*
+.bubble.top.right .tail {
+    pointer-events: none;
+    position: absolute;
+    border-top: 2em solid var( --background-bubble-color );
+    border-right: 1em solid transparent;
+    width: 0;
+    height: 0;
+    left:2em;
+    bottom:-2em;
+}
+
+.bubble.top.left .tail {
+    pointer-events: none;
+    position: absolute;
+    border-top: 2em solid var( --background-bubble-color );
+    border-right: 1em solid transparent;
+    width: 0;
+    height: 0;
+    right:2em;
+    bottom:-2em;
+}
+
+.bubble.bottom.right .tail {
+    pointer-events: none;
+    position: absolute;
+    border-right: 1em solid transparent;
+    border-bottom: 2em solid var( --background-bubble-color );
+    width: 0;
+    height: 0;
+    left:2em;
+    top:-2em;
+}
+*/
+
+.button:hover .bubble,
+.simpleradio:hover .bubble,
+.toggle:hover .bubble {
+    display: block;
+}
+
+.button:hover .bubble.top.right {
+    transform: translate(0em, -12em);
+}
+
+.button:hover .bubble.top.left {
+    transform: translate(0em, -12em);
+}
+
+.button:hover .bubble.bottom.right {
+    transform: translate(0em, 2em);
+}
+
+.simpleradio:hover .bubble.top.right {
+    transform: translate(0em, -6em);
+}
+
+.simpleradio:hover .bubble.top.left {
+    transform: translate(0em, -6em);
+}
+
+.simpleradio:hover .bubble.bottom.right {
+    transform: translate(0em, 10em);
+}
+
+.toggle:hover .bubble.top.right {
+    transform: translate(0em, -4em);
+}
+
+.toggle:hover .bubble.top.left {
+    transform: translate(0em, -4em);
+}
+
+.toggle:hover .bubble.bottom.right {
+    transform: translate(0em, 8em);
+}
