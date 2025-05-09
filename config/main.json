@@ -1,0 +1,19 @@
+{
+    "main": {
+        "author": "Denis Kazakov",
+        "email": "kazakow.denis@yandex.ru",
+        "version": "0.2 (05.2025)",
+        "about": "text",
+        "license": "text",
+        "defapp": "printapp",
+        "locale": "ru",
+        "themes": [
+            "light",
+            "dark"
+        ],
+        "theme": "light",
+        "fileman": "fileman",
+        "imgrender": "imgrender",
+        "pdfrender": "pdfrender"
+    }
+}
